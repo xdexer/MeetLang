@@ -6,7 +6,10 @@
  * @flow strict-local
  */
 
+import 'react-native-gesture-handler';
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {styles} from './styles';
 import {
   SafeAreaView,
@@ -15,24 +18,48 @@ import {
   View,
   Text,
   StatusBar,
+  Button,
+  Alert,
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const Stack = createStackNavigator();
 
+const Separator = () => {
+  return <View style={styles.separator} />;
+};
 
-const App: () => React$Node = () => {
+const StartScreen = () => {
   return (
-    <View>
-      <Text style={styles.footer}>Hello</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.footer}>MeetLang</Text>
+      </View>
+      <Separator />
+      <View>
+        <Text style={styles.main_description}>
+          Welcome to language learning meeting app !
+        </Text>
+      </View>
+      <Separator />
+      <View style={styles.fixToText}>
+        <Button title="Log in" onPress={() => Alert.alert('Log in pressed')} />
+        <Button
+          title="Sign up"
+          onPress={() => Alert.alert('Sign up pressed')}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={StartScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
 export default App;

@@ -32,11 +32,28 @@ const styles = StyleSheet.create({
   },
   footer: {
     color: Colors.dark,
-    fontSize: 12,
+    fontSize: 32,
     fontWeight: '600',
     padding: 4,
     paddingRight: 12,
-    textAlign: 'right',
+    textAlign: 'center',
+  },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 16,
+  },
+  main_description: {
+    textAlign: 'center',
+  },
+  separator: {
+    marginVertical: 16,
+    borderBottomColor: '#737373',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });
 
