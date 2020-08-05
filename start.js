@@ -30,7 +30,7 @@ const StartScreen = ({navigation}) => {
       </View>
       <Separator />
       <View style={styles.fixToText}>
-        <Button title="Log in" onPress={() => Alert.alert('Log in pressed')} />
+        <Button title="Log in" onPress={() => navigation.navigate('Log In')} />
         <Button
           title="Sign up"
           onPress={() => navigation.navigate('Sign Up')}
