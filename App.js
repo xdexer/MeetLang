@@ -21,6 +21,7 @@ import {
   Button,
   Alert,
 } from 'react-native';
+import {InitialDescConfigureScreen, InitialTagsConfigureScreen, InitialLangConfigureScreen} from './basicconfigure';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +29,7 @@ const Separator = () => {
   return <View style={styles.separator} />;
 };
 
-const StartScreen = () => {
+const StartScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -43,20 +44,22 @@ const StartScreen = () => {
       <Separator />
       <View style={styles.fixToText}>
         <Button title="Log in" onPress={() => Alert.alert('Log in pressed')} />
-        <Button
-          title="Sign up"
-          onPress={() => Alert.alert('Sign up pressed')}
-        />
+        <Button title="Sign up" onPress={() => Alert.alert('Sign up pressed')} />
+        <Button title='configure' onPress={() => navigation.navigate("InitialConfigure")} />
       </View>
     </SafeAreaView>
   );
 };
+
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={StartScreen} />
+        <Stack.Screen name="InitialConfigure" component={InitialDescConfigureScreen} />
+        <Stack.Screen name="Tags" component={InitialTagsConfigureScreen} />
+        <Stack.Screen name="Lang" component={InitialLangConfigureScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

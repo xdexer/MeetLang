@@ -55,6 +55,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#737373',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  multiline_input: {
+    fontSize: 16,
+    backgroundColor: Colors.white,
+    height: 200,
+    textAlignVertical: 'top',
+
+  }
 });
 
 export {styles};
