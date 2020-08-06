@@ -3,6 +3,7 @@ import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import {styles} from './styles';
+import {sendData} from './db_connection';
 
 const Separator = () => {
   return <View style={styles.separator} />;
@@ -47,10 +48,7 @@ const RegisterForm = () => {
         onDateChange={(date) => setDateOfBirth(date)}
       />
       <Separator />
-      <Button
-        title="Register"
-        onPress={() => Login(email, password, dateOfBirth)}
-      />
+      <Button title="Register" onPress={() => sendData()} />
     </View>
   );
 };
