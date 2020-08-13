@@ -3,14 +3,21 @@ import json
 from flask import Flask, request
 
 class UsersDatabase:
-    host = 'mongodb+srv://user0:haslo1@cluster0.fl0ij.azure.mongodb.net/test?authSource=admin&r' + \
-    'eplicaSet=atlas-nmj44l-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true'
+    host = 'mongodb+srv://userAdmin:passAdmin@cluster0.fl0ij.azure.mongodb.net/test?authSource=admin&' + \
+    'replicaSet=atlas-nmj44l-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true'
     port = 27017
     client = pymongo.MongoClient(host, port)
     users_database = client.UsersDatabase
     users_collection = users_database.Users
     users_tags_collection = users_database.UsersTags
 
+    @staticmethod
+    def return_user_info(user):
+        user_info = {}
+        for key in user:
+            if(key != "_id"):
+                user_info[key] = user[key]
+        return user_info
     @staticmethod
     def add_new_user(new_user):
         if(UsersDatabase.users_collection.find_one(new_user) == None):
@@ -60,7 +67,7 @@ def LoginUser():
     else:
         user_online = { "$set": { "status": "online" } }
         UsersDatabase.update_user(user, user_online)
-        return "User logged in."
+        return UsersDatabase.return_user_info(user)
 
 @app.route('/AddTags', methods = ['POST'])
 def AddTags():
