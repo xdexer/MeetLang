@@ -1,6 +1,7 @@
 import pymongo
 import json
 from flask import Flask, request
+from enum import Enum
 
 class UsersDatabase:
     host = 'mongodb+srv://userAdmin:passAdmin@cluster0.fl0ij.azure.mongodb.net/test?authSource=admin&' + \
@@ -42,30 +43,35 @@ class UsersDatabase:
     def update_user_tags(preview, after):
         UsersDatabase.users_tags_collection.update_one(preview, after)
 
+class ClientServerInteractionStatus(Enum):
+    WrongInput = -1
+    Fail = 0
+    Succes = 1
+
 app = Flask(__name__)
 
 @app.route('/AddNewUser', methods = ['POST'])
 def AddNewUser():
     data = request.json
     if(data == None):
-        return "Invalid input."
+        return {"Interaction status":str(ClientServerInteractionStatus.WrongInput.value)}
     if(UsersDatabase.add_new_user(data) == True):
-        return "Added succesfully."
+        return {"Interaction status":str(ClientServerInteractionStatus.Succes.value)}
     else:
-        return "Entry already exists."
+        return {"Interaction status":str(ClientServerInteractionStatus.Fail.value)}
 
 @app.route('/LoginUser', methods = ['POST'])
 def LoginUser():
     data = request.json
     if(data == None):
-        return "Invalid input."
+        return {"Interaction status":str(ClientServerInteractionStatus.WrongInput.value)}
     user = UsersDatabase.get_existing_user({"email":data["email"]})
     if(user == None):
-        return "User doesn't exist."
+        return {"Interaction status":str(ClientServerInteractionStatus.Fail.value)}
     elif(user["password"] != data["password"]):
-        return "Invalid password."
+        return {"Interaction status":str(ClientServerInteractionStatus.Fail.value)}
     else:
-        user_online = { "$set": { "status": "online" } }
+        user_online = { "$set": { "status": "online"} }
         UsersDatabase.update_user(user, user_online)
         return UsersDatabase.return_user_info(user)
 
@@ -73,15 +79,14 @@ def LoginUser():
 def AddTags():
     data = request.json
     if(data == None):
-        return "Invalid input."
+        return {"Interaction status":str(ClientServerInteractionStatus.WrongInput.value)}
     #user = UsersDatabase.get_existing_user({"email":data["email"]})
     tags = UsersDatabase.get_users_tags({"email":data["email"]})
     if(tags == None):
-        return "User doesn't exist."
+        return {"Interaction status":str(ClientServerInteractionStatus.Fail.value)}
     else:
         updated_tags = {"$set": data}
         UsersDatabase.update_user_tags(tags, updated_tags)
-        return "User's tags have got updated."
-    
+        return {"Interaction status":str(ClientServerInteractionStatus.Succes.value)} 
 
 app.run(port=5000)
