@@ -61,6 +61,12 @@ const styles = StyleSheet.create({
     height: 200,
     textAlignVertical: 'top',
 
+  },
+  item : {
+    backgroundColor: '#f9c2ff',
+    padding: 10,
+    marginVertical: 8,
+    marginHorizontal: 16
   }
 });
 

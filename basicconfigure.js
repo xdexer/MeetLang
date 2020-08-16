@@ -12,16 +12,14 @@ import {
     Button,
     Alert,
 } from 'react-native';
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { createStackNavigator} from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 
 
 const Separator = () => {
     return <View style={styles.separator} />;
 };
 
-
-const DescriptionTextInput = (props) => {
+const MultilineTextInput = (props) => {
     return(
         <TextInput
             {...props}
@@ -32,10 +30,52 @@ const DescriptionTextInput = (props) => {
     );
 }
 
+const userData = {
+}
+
+let tagsList = {
+
+}
+
+const TagItem = ({title}) => {
+    const [isPressed, setPressed] = React.useState(false);
+
+    const addData = () => {
+            let tagsCount = Object.keys(tagsList).length;
+            tagsList["tag" + tagsCount] = title;
+            setPressed(true);
+    }
+
+    const deleteData = () => {
+        const tempTagList = {};
+        let counter = 0;
+
+        for (const tag in tagsList){
+            if(tagsList[tag] === title){
+                delete tagsList[tag];
+            }
+        }
+        for (const tag in tagsList){
+            tempTagList["tag" + counter] = tagsList[tag];
+            counter++;
+        }
+        tagsList = tempTagList;
+        setPressed(false);
+    }
+
+    return(
+        <View style={styles.item}>
+            <Text style={{fontSize: 16}} onPress={ () => isPressed ? deleteData() : addData()}>
+                {title}
+            </Text>
+        </View>
+    )
+}
 
 const InitialDescConfigureScreen = () => {
-    const [description, setDescription] = React.useState('');
+    const [description, onChangeText] = React.useState('');
     const navigation = useNavigation();
+
     return (
         <SafeAreaView style={styles.container}>
             <View>
@@ -43,34 +83,40 @@ const InitialDescConfigureScreen = () => {
             </View>
             <Separator />
             <View>
-                <DescriptionTextInput
+                <MultilineTextInput
                     multiline
                     numberOfLines={4}
-                    setDescription={text => setDescription(text)}
+                    onChangeText={text => onChangeText(text)}
                     description={description}
                     />
             </View>
             <Separator/>
             <View style={styles.fixToText}>
                 <Button title="Back" onPress={ () => navigation.navigate("Home")} />
-                <Button title="Next" onPress={ () => navigation.navigate("Tags")} />
+                <Button title="Next" onPress={ () => { userData.desc = description; navigation.navigate("Tags");}} />
             </View>
         </SafeAreaView>
     )
 }
 
 const InitialTagsConfigureScreen = () => {
-    const userTags = [];
     const navigation = useNavigation();
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <View>
                 <Text style={styles.footer}>Choose your hobby!</Text>
             </View>
             <Separator />
+            <View>
+               <TagItem title="dupa" />
+               <TagItem title="cipa" />
+               <TagItem title="koks" />
+               <TagItem title="woda" />
+            </View>
             <View style={styles.fixToText}>
                 <Button title="Back" onPress={ () => navigation.goBack()} />
-                <Button title="Next" onPress={ () => navigation.navigate("Lang")} />
+                <Button title="Next" onPress={ () => { userData.tags = tagsList; console.log(userData); navigation.navigate("Lang");}} />
+                <Button title="test" onPress={ () => console.log(tagsList)} />
             </View>
         </SafeAreaView>
     );
@@ -81,7 +127,7 @@ const InitialLangConfigureScreen = () => {
     const userLangs = [];
     const navigation = useNavigation();
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <View>
                 <Text style={styles.footer}>What languagse would you like to learn?</Text>
             </View>
