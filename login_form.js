@@ -10,19 +10,19 @@ import {
   generateCodeVerifier,
   generateCodeChallenge,
 } from './IDProvider_connection';
+import {loginUser} from './db_connection';
 
 const Separator = () => {
   return <View style={styles.separator} />;
 };
 
 const Login = (email, password) => {
-  //Alert.alert('Email : ' + email + ' , Password : ' + password);
-  //let userData = {email: email, password: password};
-  //loginUser(userData).then((r) => Alert.alert(r));
   let userCode = generateCodeVerifier();
   console.log(userCode);
   let userChallenge = generateCodeChallenge(userCode);
   console.log(userChallenge);
+  let userData = {code_verifier: userCode, code_challenge: userChallenge};
+  loginUser(userData).then((r) => Alert.alert(r));
 };
 
 const RegisterForm = () => {
@@ -54,7 +54,7 @@ const RegisterForm = () => {
         style={{width: 192, height: 48}}
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Dark}
-        onPress={() => Login(email,password)}
+        onPress={() => Login(email, password)}
       />
     </View>
   );

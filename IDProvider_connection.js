@@ -1,5 +1,5 @@
-import RNSimpleCrypto from 'react-native-simple-crypto';
 import CryptoJS from 'react-native-crypto-js';
+import sha256 from 'crypto-js/sha256';
 
 const generateCodeVerifier = () => {
   let code_verifier = '';
@@ -14,15 +14,7 @@ const generateCodeVerifier = () => {
 };
 
 const generateCodeChallenge = (code_verifier) => {
-  return base64url(RNSimpleCrypto.SHA.sha256(code_verifier));
-};
-
-const base64url = (string) => {
-  return string
-    .toString(CryptoJS.enc.Base64)
-    .replace(/[=]/g, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
+  return sha256(code_verifier).toString();
 };
 
 /*const logger = async () => {

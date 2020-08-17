@@ -20,7 +20,7 @@ const addNewUser = async (userData) => {
 const loginUser = async (userData) => {
   //console.log(JSON.stringify(data));
   try {
-    let response = await fetch('http://f723723e7d9b.ngrok.io/LoginUser', {
+    let response = await fetch('http://cf11402b2ffa.ngrok.io/test', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -28,8 +28,8 @@ const loginUser = async (userData) => {
       },
       body: JSON.stringify(userData),
     });
-    let json = await response.json();
-    return json.status;
+    //let json = await response.json();
+    //return json.status;
   } catch (error) {
     console.error(error);
   }
