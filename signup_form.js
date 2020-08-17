@@ -13,7 +13,9 @@ const Login = (email, password, date) => {
     'Email : ' + email + ' , Password : ' + password + ' , Date : ' + date,
   );
   let userData = {email: email, password: password};
-  addNewUser(userData);
+  addNewUser(userData).then((r) =>
+    console.log('Sign-up successful ' + r['Interaction status']),
+  );
 };
 const RegisterForm = () => {
   const [email, setEmail] = React.useState('');

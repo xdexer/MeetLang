@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {StartScreen} from './start';
 import {SignupForm} from './signup_form';
 import {LoginForm} from './login_form';
+
 const Stack = createStackNavigator();
 
 const App = () => {
