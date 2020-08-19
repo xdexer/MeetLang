@@ -63,7 +63,13 @@ const styles = StyleSheet.create({
 
   },
   item : {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#40bf80',
+    padding: 10,
+    marginVertical: 8,
+    marginHorizontal: 16
+  },
+  pressed_item : {
+    backgroundColor: '#79d2a6',
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 16

@@ -33,38 +33,40 @@ const MultilineTextInput = (props) => {
 const userData = {
 }
 
-let tagsList = {
+let dataList = {
 
 }
 
-const TagItem = ({title}) => {
+const ChoosableItem = ({title}) => {
     const [isPressed, setPressed] = React.useState(false);
+    const [itemStyle, setStyle] = React.useState(styles.item);
 
     const addData = () => {
-            let tagsCount = Object.keys(tagsList).length;
-            tagsList["tag" + tagsCount] = title;
+            let counter = Object.keys(dataList).length;
+            dataList[counter] = title;
+            setStyle(styles.pressed_item);
             setPressed(true);
     }
 
     const deleteData = () => {
-        const tempTagList = {};
+        const tempDataList = {};
         let counter = 0;
 
-        for (const tag in tagsList){
-            if(tagsList[tag] === title){
-                delete tagsList[tag];
+        for (const tag in dataList){
+            if(dataList[tag] === title)
+                continue;
+            else{
+                tempDataList[counter] = dataList[tag];
+                counter++;
             }
         }
-        for (const tag in tagsList){
-            tempTagList["tag" + counter] = tagsList[tag];
-            counter++;
-        }
-        tagsList = tempTagList;
+        dataList = tempDataList;
+        setStyle(styles.item);
         setPressed(false);
     }
 
     return(
-        <View style={styles.item}>
+        <View style={itemStyle}>
             <Text style={{fontSize: 16}} onPress={ () => isPressed ? deleteData() : addData()}>
                 {title}
             </Text>
@@ -72,9 +74,10 @@ const TagItem = ({title}) => {
     )
 }
 
-const InitialDescConfigureScreen = () => {
-    const [description, onChangeText] = React.useState('');
+const InitialDescConfigureScreen = () =>{
+    // its necessary for Navigator to work properly
     const navigation = useNavigation();
+    const [description, onChangeText] = React.useState('');
 
     return (
         <SafeAreaView style={styles.container}>
@@ -100,7 +103,18 @@ const InitialDescConfigureScreen = () => {
 }
 
 const InitialTagsConfigureScreen = () => {
+    // its necessary for Navigator to work properly
     const navigation = useNavigation();
+
+    const updateUserData = () => {
+        userData.tags = dataList;
+    }
+
+    React.useEffect(() =>{
+        dataList = {};
+    })
+
+
     return(
         <SafeAreaView style={styles.container}>
             <View>
@@ -108,15 +122,16 @@ const InitialTagsConfigureScreen = () => {
             </View>
             <Separator />
             <View>
-               <TagItem title="dupa" />
-               <TagItem title="cipa" />
-               <TagItem title="koks" />
-               <TagItem title="woda" />
+                <ChoosableItem title="Music" />
+                <ChoosableItem title="Games" />
+                <ChoosableItem title="Netflix & Chill" />
+                <ChoosableItem title="Journeys small and big" />
             </View>
+            <Separator />
             <View style={styles.fixToText}>
                 <Button title="Back" onPress={ () => navigation.goBack()} />
-                <Button title="Next" onPress={ () => { userData.tags = tagsList; console.log(userData); navigation.navigate("Lang");}} />
-                <Button title="test" onPress={ () => console.log(tagsList)} />
+                <Button title="Next" onPress={ () => { updateUserData(); console.log(userData); navigation.navigate("Lang");}} />
+                <Button title="test" onPress={ () => console.log(dataList)} />
             </View>
         </SafeAreaView>
     );
@@ -124,17 +139,33 @@ const InitialTagsConfigureScreen = () => {
 }
 
 const InitialLangConfigureScreen = () => {
-    const userLangs = [];
+    // its necessary for Navigator to work properly
     const navigation = useNavigation();
+
+    React.useEffect(() =>{
+        dataList = {};
+    })
+
+    const updateUserData = () => {
+        userData.langs = dataList;
+    }
+
     return(
         <SafeAreaView style={styles.container}>
             <View>
                 <Text style={styles.footer}>What languagse would you like to learn?</Text>
             </View>
             <Separator />
+            <View>
+                <ChoosableItem title="English"/>
+                <ChoosableItem title="Spanish"/>
+                <ChoosableItem title="Cebulacki"/>
+                <ChoosableItem title="Deutch"/>
+            </View>
             <View style={styles.fixToText}>
                 <Button title="Back" onPress={ () => navigation.goBack()} />
-                <Button title="Done!" onPress={ () => navigation.navigate("Home")} />
+                <Button title="Done!" onPress={ () => { updateUserData(); console.log(userData); navigation.navigate("Home")}} />
+                <Button title="test" onPress={ () => console.log(dataList)} />
             </View>
         </SafeAreaView>
     );
