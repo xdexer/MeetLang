@@ -6,10 +6,7 @@ import {
   GoogleSigninButton,
 } from '@react-native-community/google-signin/index';
 import {styles} from './styles';
-import {
-  generateCodeVerifier,
-  generateCodeChallenge,
-} from './IDProvider_connection';
+import {generateRandomString, generateCodeChallenge} from './init_config';
 import {loginUser} from './db_connection';
 
 const Separator = () => {
@@ -17,10 +14,12 @@ const Separator = () => {
 };
 
 const Login = (email, password) => {
-  let userCode = generateCodeVerifier();
+  let userCode = generateRandomString();
   console.log(userCode);
+
   let userChallenge = generateCodeChallenge(userCode);
   console.log(userChallenge);
+
   let userData = {code_verifier: userCode, code_challenge: userChallenge};
   loginUser(userData).then((r) => Alert.alert(r));
 };

@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
-import DatePicker from 'react-native-datepicker';
 import {styles} from './styles';
 import {addNewUser} from './db_connection';
 
@@ -20,7 +19,6 @@ const Login = (email, password, date) => {
 const RegisterForm = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [dateOfBirth, setDateOfBirth] = React.useState('');
 
   return (
     <View>
@@ -41,22 +39,7 @@ const RegisterForm = () => {
         defaultValue={password}
       />
       <Separator />
-      <DatePicker
-        date={dateOfBirth}
-        mode="date"
-        placeholder="select date of birth"
-        format="YYYY-MM-DD"
-        minDate="1900-01-01"
-        maxDate="2020-01-01"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        onDateChange={(date) => setDateOfBirth(date)}
-      />
-      <Separator />
-      <Button
-        title="Register"
-        onPress={() => Login(email, password, dateOfBirth)}
-      />
+      <Button title="Register" onPress={() => Login(email, password)} />
     </View>
   );
 };

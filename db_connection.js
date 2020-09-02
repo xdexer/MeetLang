@@ -3,7 +3,7 @@ import React from 'react';
 const addNewUser = async (userData) => {
   //console.log(JSON.stringify(data));
   try {
-    let response = await fetch('http://f723723e7d9b.ngrok.io/AddNewUser', {
+    let response = await fetch('https://meet-lang.herokuapp.com/AddNewUser', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -20,7 +20,7 @@ const addNewUser = async (userData) => {
 const loginUser = async (userData) => {
   //console.log(JSON.stringify(data));
   try {
-    let response = await fetch('http://cf11402b2ffa.ngrok.io/test', {
+    let response = await fetch('https://meet-lang.herokuapp.com/test', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
