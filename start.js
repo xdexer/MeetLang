@@ -11,6 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import {styles} from './styles';
+import {test} from './utils/init_config';
 
 const Separator = () => {
   return <View style={styles.separator} />;

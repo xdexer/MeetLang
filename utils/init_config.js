@@ -25,7 +25,8 @@ async function checkIfFirstLaunch() {
 
 const checkAsyncStorage = async () => {
   let state = await AsyncStorage.getItem(STATE);
-  return 'check : ' + state;
+  let client_id = await AsyncStorage.getItem(CLIENT_ID);
+  return 'check : ' + state + '   ' + client_id;
 };
 
 const generateRandomString = () => {
@@ -40,10 +41,16 @@ const generateRandomString = () => {
 
 const setInitialLocalData = async () => {
   let state = generateRandomString();
-  let client_id = '';
+  //let client_id = '';
   try {
     await AsyncStorage.setItem(STATE, state);
-    await AsyncStorage.setItem(CLIENT_ID, client_id);
+    //await AsyncStorage.setItem(CLIENT_ID, client_id);
+
+    let data = {state: state};
+    register(data).then((r) => {
+      console.log(r);
+      AsyncStorage.setItem(CLIENT_ID, r.client_id);
+    });
   } catch (e) {
     console.log(e);
   }
@@ -70,10 +77,29 @@ const register = async (data) => {
   }
 };
 
+const testt = async () => {
+  let data = {
+    token: await AsyncStorage.getItem('google_token'),
+  };
+  try {
+    let response = await fetch('http://9d19c70af9c5.ngrok.io/test', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
 export {
   generateCodeChallenge,
   generateRandomString,
   checkIfFirstLaunch,
   setInitialLocalData,
   checkAsyncStorage,
+  testt,
 };

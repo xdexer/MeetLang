@@ -10,26 +10,25 @@ import {
   checkIfFirstLaunch,
   setInitialLocalData,
   checkAsyncStorage,
-} from './init_config';
+} from './utils/init_config';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+  //nie działa if statement, zawsze prawdziwy przy uruchomieniu
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(true);
   React.useEffect(() => {
-    checkIfFirstLaunch().then((isFirstLaunch) => {
-      setIsFirstLaunch(isFirstLaunch);
+    checkIfFirstLaunch().then(() => {
+      setIsFirstLaunch(false);
     });
   }, []);
   if (isFirstLaunch) {
     setInitialLocalData().then(async (r) => {
       let state = await AsyncStorage.getItem('state');
-      console.log('set : ' + state);
+      let client_id = await AsyncStorage.getItem('client_id');
+      console.log('set : ' + state + '   ' + client_id);
     });
-  }
-  if (!isFirstLaunch) {
-    checkAsyncStorage().then((r) => console.log(r));
   }
 
   return (

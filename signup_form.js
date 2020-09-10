@@ -2,7 +2,6 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
 import {styles} from './styles';
-import {addNewUser} from './db_connection';
 
 const Separator = () => {
   return <View style={styles.separator} />;
@@ -12,9 +11,6 @@ const Login = (email, password, date) => {
     'Email : ' + email + ' , Password : ' + password + ' , Date : ' + date,
   );
   let userData = {email: email, password: password};
-  addNewUser(userData).then((r) =>
-    console.log('Sign-up successful ' + r['Interaction status']),
-  );
 };
 const RegisterForm = () => {
   const [email, setEmail] = React.useState('');
@@ -40,6 +36,7 @@ const RegisterForm = () => {
       />
       <Separator />
       <Button title="Register" onPress={() => Login(email, password)} />
+
     </View>
   );
 };
