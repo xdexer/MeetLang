@@ -35,7 +35,7 @@
     "react-native-screens": "^2.9.0",
     "react-native-simple-crypto": "^0.2.13",
     "react-navigation": "^4.4.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
     "react-native": "0.63.2",
     "react-native-gesture-handler": "^1.7.0",
     "react-native-safe-area-context": "^3.1.1",

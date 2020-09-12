@@ -11,7 +11,8 @@ import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {StartScreen} from './start';
+//import {StartScreen} from './start';
+import {styles} from './styles';
 import {SignupForm} from './signup_form';
 import {LoginForm} from './login_form';
 import {
@@ -20,24 +21,14 @@ import {
   checkAsyncStorage,
 } from './utils/init_config';
 import AsyncStorage from '@react-native-community/async-storage';
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-  Alert,
-} from 'react-native';
-import {ConfigureStackNavigator} from "./Navigators/ConfigureStackNavigator";
-import {Separator} from "./Components/Separator";
+import {ConfigureStackNavigator} from './Navigators/ConfigureStackNavigator';
+import {Separator} from './Components/Separator';
 
 const Stack = createStackNavigator();
 
-let userData = {
-}
+let userData = {};
 
-const StartScreen = ({ navigation }) => {
+const StartScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -51,15 +42,25 @@ const StartScreen = ({ navigation }) => {
       </View>
       <Separator />
       <View style={styles.fixToText}>
-        <Button title="Log in" onPress={() => Alert.alert('Log in pressed')} />
-        <Button title="Sign up" onPress={() => Alert.alert('Sign up pressed')} />
-        <Button title='Configure' onPress={() => navigation.navigate("Configure", {screen: "Name", params: {user: userData}})} />
-        <Button title='test data flow' onPress={() => console.log(userData)} />
+        <Button title="Log in" onPress={() => navigation.navigate('Log In')} />
+        <Button
+          title="Sign up"
+          onPress={() => navigation.navigate('Sign Up')}
+        />
+        <Button
+          title="Configure"
+          onPress={() =>
+            navigation.navigate('Configure', {
+              screen: 'Name',
+              params: {user: userData},
+            })
+          }
+        />
+        <Button title="test data flow" onPress={() => console.log(userData)} />
       </View>
     </SafeAreaView>
   );
 };
-
 
 const App = () => {
   //nie działa if statement, zawsze prawdziwy przy uruchomieniu
