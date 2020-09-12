@@ -21,7 +21,7 @@ const StartScreen = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={styles.footer}>MeetLang</Text>
+        <Text style={styles.footer}>MeetLangg</Text>
       </View>
       <Separator />
       <View>
