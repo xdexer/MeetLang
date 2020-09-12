@@ -1,28 +1,25 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
-import {styles} from './styles';
+import {styles} from '../styles';
+import {GoogleComponent} from '../Components/GoogleSignIn';
+import {login} from '../utils/server_connection';
 
 const Separator = () => {
   return <View style={styles.separator} />;
 };
-const Login = (email, password, date) => {
-  Alert.alert(
-    'Email : ' + email + ' , Password : ' + password + ' , Date : ' + date,
-  );
-  let userData = {email: email, password: password};
-};
+
 const RegisterForm = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, checkEmail] = React.useState('');
+  const [password, checkPassword] = React.useState('');
 
   return (
     <View>
       <TextInput
         label="Email"
-        placeholder="Please Select Your E-mail Address"
+        placeholder="Please Enter Your E-mail Address"
         value={email}
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={(text) => checkEmail(text)}
         defaultValue={email}
       />
       <Separator />
@@ -31,21 +28,22 @@ const RegisterForm = () => {
         placeholder="Please Enter Your Password"
         secureTextEntry={true}
         value={password}
-        onChangeText={(text) => setPassword(text)}
+        onChangeText={(text) => checkPassword(text)}
         defaultValue={password}
       />
       <Separator />
-      <Button title="Register" onPress={() => Login(email, password)} />
-
+      <Button title="Log In" onPress={() => login(email, password)} />
+      <Separator />
+      <GoogleComponent />
     </View>
   );
 };
 
-const SignupForm = () => {
+const LoginForm = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={styles.footer}>Sign Up !</Text>
+        <Text style={styles.footer}>Log In !</Text>
       </View>
       <Separator />
       <RegisterForm />
@@ -53,4 +51,4 @@ const SignupForm = () => {
   );
 };
 
-export {SignupForm};
+export {LoginForm};

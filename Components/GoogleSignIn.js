@@ -5,7 +5,7 @@ import {
 } from '@react-native-community/google-signin/index';
 import React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import {testt} from './utils/init_config';
+import {testt} from '../utils/init_config';
 
 const googleWebClientID =
   '189056742803-rd8fvdfo2h4t543erqctafpbv4emeta6.apps.googleusercontent.com';
