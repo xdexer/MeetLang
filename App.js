@@ -1,3 +1,11 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
 import 'react-native-gesture-handler';
 import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
@@ -12,8 +20,46 @@ import {
   checkAsyncStorage,
 } from './utils/init_config';
 import AsyncStorage from '@react-native-community/async-storage';
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Button,
+  Alert,
+} from 'react-native';
+import {ConfigureStackNavigator} from "./Navigators/ConfigureStackNavigator";
+import {Separator} from "./Components/Separator";
 
 const Stack = createStackNavigator();
+
+let userData = {
+}
+
+const StartScreen = ({ navigation }) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text style={styles.footer}>MeetLang</Text>
+      </View>
+      <Separator />
+      <View>
+        <Text style={styles.main_description}>
+          Welcome to language learning meeting app !
+        </Text>
+      </View>
+      <Separator />
+      <View style={styles.fixToText}>
+        <Button title="Log in" onPress={() => Alert.alert('Log in pressed')} />
+        <Button title="Sign up" onPress={() => Alert.alert('Sign up pressed')} />
+        <Button title='Configure' onPress={() => navigation.navigate("Configure", {screen: "Name", params: {user: userData}})} />
+        <Button title='test data flow' onPress={() => console.log(userData)} />
+      </View>
+    </SafeAreaView>
+  );
+};
+
 
 const App = () => {
   //nie działa if statement, zawsze prawdziwy przy uruchomieniu
@@ -37,6 +83,7 @@ const App = () => {
         <Stack.Screen name="Home" component={StartScreen} />
         <Stack.Screen name="Sign Up" component={SignupForm} />
         <Stack.Screen name="Log In" component={LoginForm} />
+        <Stack.Screen name="Configure" component={ConfigureStackNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
   );
