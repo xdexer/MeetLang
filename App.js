@@ -1,62 +1,42 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import 'react-native-gesture-handler';
 import React from 'react';
+import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {styles} from './styles';
+import {StartScreen} from './start';
+import {SignupForm} from './signup_form';
+import {LoginForm} from './login_form';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Button,
-  Alert,
-} from 'react-native';
+  checkIfFirstLaunch,
+  setInitialLocalData,
+  checkAsyncStorage,
+} from './utils/init_config';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
 
-const Separator = () => {
-  return <View style={styles.separator} />;
-};
-
-const StartScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text style={styles.footer}>MeetLang</Text>
-      </View>
-      <Separator />
-      <View>
-        <Text style={styles.main_description}>
-          Welcome to language learning meeting app !
-        </Text>
-      </View>
-      <Separator />
-      <View style={styles.fixToText}>
-        <Button title="Log in" onPress={() => Alert.alert('Log in pressed')} />
-        <Button
-          title="Sign up"
-          onPress={() => Alert.alert('Sign up pressed')}
-        />
-      </View>
-    </SafeAreaView>
-  );
-};
-
 const App = () => {
+  //nie działa if statement, zawsze prawdziwy przy uruchomieniu
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(true);
+  React.useEffect(() => {
+    checkIfFirstLaunch().then(() => {
+      setIsFirstLaunch(false);
+    });
+  }, []);
+  if (isFirstLaunch) {
+    setInitialLocalData().then(async (r) => {
+      let state = await AsyncStorage.getItem('state');
+      let client_id = await AsyncStorage.getItem('client_id');
+      console.log('set : ' + state + '   ' + client_id);
+    });
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={StartScreen} />
+        <Stack.Screen name="Sign Up" component={SignupForm} />
+        <Stack.Screen name="Log In" component={LoginForm} />
       </Stack.Navigator>
     </NavigationContainer>
   );
