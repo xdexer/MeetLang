@@ -2,16 +2,15 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
 import {styles} from '../styles';
+import {Separator} from "../Components/Separator";
 
-const Separator = () => {
-  return <View style={styles.separator} />;
-};
 const Login = (email, password, date) => {
   Alert.alert(
     'Email : ' + email + ' , Password : ' + password + ' , Date : ' + date,
   );
   let userData = {email: email, password: password};
 };
+
 const RegisterForm = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');

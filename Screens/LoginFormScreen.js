@@ -4,10 +4,7 @@ import {Alert, Button, SafeAreaView, Text, View, TextInput} from 'react-native';
 import {styles} from '../styles';
 import {GoogleComponent} from '../Components/GoogleSignIn';
 import {login} from '../utils/server_connection';
-
-const Separator = () => {
-  return <View style={styles.separator} />;
-};
+import {Separator} from "../Components/Separator";
 
 const RegisterForm = () => {
   const [email, checkEmail] = React.useState('');

@@ -57,7 +57,9 @@ const login = async (email, password) => {
       },
     };
     console.log(token_body);
-    token(token_body).then((res) => console.log(res));
+    token(token_body).then((res) => {
+      console.log(res)
+    });
   });
 };
 
